@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Cloud9</string>
+
+
+    <string name="facebook_application_id" translatable="false">126971251243209</string>
+    <!-- Facebook Application ID, prefixed by 'fb'.  Enables Chrome Custom tabs. -->
+    <string name="facebook_login_protocol_scheme" translatable="false">fb126971251243209</string>
+    <string name="title_activity_main2">Main2Activity</string>
+</resources>
