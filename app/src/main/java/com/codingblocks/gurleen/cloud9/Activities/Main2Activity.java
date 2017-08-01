@@ -1,6 +1,5 @@
 package com.codingblocks.gurleen.cloud9.Activities;
 
-import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -30,7 +29,7 @@ import com.codingblocks.gurleen.cloud9.DataModels.MainRecyclerViewData;
 import com.codingblocks.gurleen.cloud9.DataModels.UserData;
 import com.codingblocks.gurleen.cloud9.MainFragement;
 import com.codingblocks.gurleen.cloud9.R;
-import com.codingblocks.gurleen.cloud9.Upload;
+import com.codingblocks.gurleen.cloud9.DataModels.Upload;
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 

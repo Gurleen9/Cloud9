@@ -1,4 +1,4 @@
-package com.codingblocks.gurleen.cloud9;
+package com.codingblocks.gurleen.cloud9.DataModels;
 
 /**
  * Created by hp on 7/28/2017.

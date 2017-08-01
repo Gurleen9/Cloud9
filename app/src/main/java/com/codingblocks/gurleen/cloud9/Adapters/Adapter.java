@@ -15,9 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codingblocks.gurleen.cloud9.Activities.Main2Activity;
-import com.codingblocks.gurleen.cloud9.DataModels.ImageFolderData;
 import com.codingblocks.gurleen.cloud9.R;
-import com.codingblocks.gurleen.cloud9.Upload;
+import com.codingblocks.gurleen.cloud9.DataModels.Upload;
 
 import java.util.ArrayList;
 

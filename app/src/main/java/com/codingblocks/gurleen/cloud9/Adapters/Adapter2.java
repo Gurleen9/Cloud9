@@ -1,29 +1,23 @@
 package com.codingblocks.gurleen.cloud9.Adapters;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codingblocks.gurleen.cloud9.Activities.Main2Activity;
-import com.codingblocks.gurleen.cloud9.DataModels.ImageFolderData;
 import com.codingblocks.gurleen.cloud9.DataModels.MainRecyclerViewData;
 import com.codingblocks.gurleen.cloud9.FragmentImages;
 import com.codingblocks.gurleen.cloud9.R;
-import com.codingblocks.gurleen.cloud9.Upload;
+import com.codingblocks.gurleen.cloud9.DataModels.Upload;
 
 import java.util.ArrayList;
-
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
  * Created by hp on 7/25/2017.
