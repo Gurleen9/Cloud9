@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "com.codingblocks.gurleen.cloud9"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -36,6 +36,9 @@ dependencies {
 
 
 
+
+
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.firebase:firebase-storage:11.0.2'
@@ -49,9 +52,9 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:11.0.2'
     compile 'com.facebook.android:facebook-android-sdk:4.22.1'
     compile 'com.getbase:floatingactionbutton:1.10.1'
+    compile 'com.android.support:support-v4:25.3.1'
 
-
-
+    compile 'com.github.bumptech.glide:glide:3.7.0'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -1,4 +1,4 @@
-package com.codingblocks.gurleen.cloud9;
+package com.codingblocks.gurleen.cloud9.DataModels;
 
 import android.net.Uri;
 

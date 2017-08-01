@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +25,7 @@
 
             android:label="Cloud9"
             android:icon="@drawable/icon"
-            android:name=".Main2Activity"
+            android:name=".Activities.Main2Activity"
 
            >   </activity>
     </application>

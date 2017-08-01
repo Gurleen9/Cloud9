@@ -4,10 +4,14 @@
 
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.codingblocks.gurleen.cloud9.Main2Activity"
+    tools:context="com.codingblocks.gurleen.cloud9.Activities.Main2Activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<FrameLayout
+    android:id="@+id/mainFrameLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
 
 
@@ -16,16 +20,12 @@
 
 
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent">
-    <Button android:id="@+id/ChooseButton"
-        android:text="Chooser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button android:id="@+id/UploadButton"
-        android:text="Upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    </LinearLayout>
+
+
+
+</FrameLayout>
+
+
 
     <FrameLayout
         android:id="@+id/frame_layout"
@@ -44,38 +44,42 @@
             fab:fab_labelStyle="@style/menu_labels_style"
             fab:fab_labelsPosition="left">
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/accent"
-                fab:fab_colorPressed="@color/accent_dark"
-                fab:fab_plusIconColor="@color/white"
-                fab:fab_icon="@drawable/icon"
-                fab:fab_size="mini"
-                fab:fab_title="Events" />
+            <com.getbase.floatingactionbutton.AddFloatingActionButton
+                android:id="@+id/ChooseButton"
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 fab:fab_colorNormal="@color/accent"
                 fab:fab_colorPressed="@color/accent_dark"
                 fab:fab_plusIconColor="@color/white"
-                fab:fab_icon="@drawable/icon"
-                fab:fab_size="mini"
-                fab:fab_title="Photographs" />
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_others"
+                fab:fab_icon="@drawable/gu1"
+                fab:fab_size="mini"
+                fab:fab_title="Gallery" />
+
+            <com.getbase.floatingactionbutton.AddFloatingActionButton
+                android:id="@+id/ChooseButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 fab:fab_colorNormal="@color/accent"
                 fab:fab_colorPressed="@color/accent_dark"
                 fab:fab_plusIconColor="@color/white"
-                fab:fab_icon="@drawable/icon"
+                fab:fab_icon="@drawable/gu2"
                 fab:fab_size="mini"
-                fab:fab_title="Others" />
+                fab:fab_title="Take Photo" />
+
+            <com.getbase.floatingactionbutton.AddFloatingActionButton
+                android:id="@+id/ChooseButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/accent"
+                fab:fab_colorPressed="@color/accent_dark"
+                fab:fab_plusIconColor="@color/white"
+
+                fab:fab_icon="@drawable/gu3"
+                fab:fab_size="mini"
+                fab:fab_title="Device Files" />
+
 
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
     </FrameLayout>

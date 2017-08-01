@@ -5,6 +5,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/starter"
 
-    tools:context="com.codingblocks.gurleen.cloud9.MainActivity">
+    tools:context="com.codingblocks.gurleen.cloud9.Activities.MainActivity">
 
 </RelativeLayout>
