@@ -2,12 +2,19 @@ package com.codingblocks.gurleen.cloud9.Activities;
 
 import android.content.ClipData;
 import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 
 import android.support.v4.app.FragmentManager;
@@ -54,8 +61,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
+
 public class Main2Activity extends AppCompatActivity {
-    ArrayList<ImageFolderData> arrayList1 = new ArrayList<>();
+
     ArrayList<MainRecyclerViewData> arrayList = new ArrayList<>();
     private StorageReference cStorageRef;
     private StorageReference mStorageRef;
@@ -72,16 +81,13 @@ public class Main2Activity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ArrayList<Upload> UploadArrayList;
 
-    private File localFile;
+
     private static final int PICK_IMAGE_REQUEST = 56;
     private static final int PICKFILE_REQUEST_CODE = 32;
     private static final int CAMERA_REQUEST = 99;
 
 
-    private Uri downloadUrl1;
 
-    private Bitmap bitmap;
-    TextView downloadU;
     FirebaseUser user;
     RecyclerView rv;
     Adapter adapter;
@@ -264,9 +270,11 @@ UploadArrayList.clear();
 
 
     private void DiskChooser() {
-        Intent DiskChooser = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent DiskChooser = new Intent();
+        DiskChooser.setAction(Intent.ACTION_GET_CONTENT);
         DiskChooser.setType("file/*");
         DiskChooser.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+
         startActivityForResult(Intent.createChooser(DiskChooser, "Select files to backup"), PICKFILE_REQUEST_CODE);
 
 
@@ -316,10 +324,31 @@ UploadArrayList.clear();
 
 
         } else if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+                    boolean flag = false;
+          try{    ClipData clip = data.getClipData();  }
+          catch (Exception ex)
+          { flag = true;
+                Log.e("EXCEPTION","This exception came ");
 
+            Uri uri  =  data.getData();
+              SingleItemAsyncTask  singleItemAsyncTask = new SingleItemAsyncTask();
+              singleItemAsyncTask.execute(uri);
+
+          }
+                        if(!flag) {
+                            ClipData clip = data.getClipData();
+                            MyAsyncTask asyncTask = new MyAsyncTask();
+                            asyncTask.execute(clip);
+                        }
+
+        }
+
+
+        else if(requestCode == PICKFILE_REQUEST_CODE && resultCode == RESULT_OK && data != null)
+        {
             ClipData clip = data.getClipData();
-            MyAsyncTask asyncTask = new MyAsyncTask();
-            asyncTask.execute(clip);
+            MyAsyncTask asyncTask1 = new MyAsyncTask();
+            asyncTask1.execute(clip);
 
 
         }
@@ -327,6 +356,97 @@ UploadArrayList.clear();
 
     }
 
+
+    class SingleItemAsyncTask extends AsyncTask<Uri, Integer, String> {
+
+
+        @Override
+        protected String doInBackground(Uri... params) {
+
+
+            Uri uri = params[0];
+
+
+            String path = getPath(getBaseContext(), uri);
+            File f = new File("" + path);
+            final String fileName = f.getName();
+
+
+            String mimeType = getMimeType(path);
+
+            Log.e("OnActivityResult", "Uri of selected images" + uri.toString());
+
+            Log.e("OnActivityResult", "Path of selected image is" + path);
+            Log.e("OnActivityResult", "Name  of selected image is" + fileName);
+            Log.e("OnActivityResult", "Mime type  of selected image is" + mimeType);
+
+            if (mimeType.contains("jpg") || mimeType.contains("png") || mimeType.contains("jpeg")) {
+                folderName = "image";
+            } else if (mimeType.contains("mp4")) {
+                folderName = "video";
+            } else if (mimeType.contains("mp3") || mimeType.contains("wav")) {
+                folderName = "audio";
+            } else if (mimeType.contains("pdf") || mimeType.contains(".ppt") || mimeType.contains("xls") || mimeType.contains("zip") ||
+                    mimeType.contains("text") || mimeType.contains(".doc") || mimeType.contains("docx")) {
+                folderName = "others";
+            }
+
+
+            mStorageRef = cStorageRef.child("users").child(user.getUid()).child(folderName).child(fileName);
+
+
+            mStorageRef.putFile(uri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            Upload upload = new Upload(fileName, taskSnapshot.getDownloadUrl().toString());
+                            UploadArrayList.add(upload);
+
+                            DatabaseReference dbrefNew = databaseReference.child("users").child(user.getUid()).child(folderName);
+                            dbrefNew.setValue(UploadArrayList);
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                            // ...
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if (task.isSuccessful()) {
+
+
+                        //Do something here
+
+                    }
+                }
+            });
+
+       return "";
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            super.onPostExecute(s);
+
+
+        }
+
+
+    }
 
     class MyAsyncTask extends AsyncTask<ClipData, Integer, String> {
 
@@ -340,12 +460,14 @@ UploadArrayList.clear();
                 ClipData.Item item = clip.getItemAt(i);
 
                 Uri uri = item.getUri();
-                String path = uri.getPath();
-                File f = new File("" + uri);
+
+
+                String path = getPath(getBaseContext(),uri);
+                File f = new File("" + path);
                 final String fileName = f.getName();
 
-                String mimeType = getFileExtension(uri);
-                Log.e("FUNCTION TEST", "Mimetype" + mimeType);
+
+                String mimeType = getMimeType(path);
 
                 Log.e("OnActivityResult", "Uri of selected images" + uri.toString());
 
@@ -353,9 +475,27 @@ UploadArrayList.clear();
                 Log.e("OnActivityResult", "Name  of selected image is" + fileName);
                 Log.e("OnActivityResult", "Mime type  of selected image is" + mimeType);
 
-                if (mimeType.contains("jpg") || mimeType.contains("png")) {
+                if (mimeType.contains("jpg") || mimeType.contains("png") ||mimeType.contains("jpeg") ) {
                     folderName = "image";
                 }
+
+                else if(mimeType.contains("mp4"))
+                {
+                    folderName = "video";
+                }
+
+                else if(mimeType.contains("mp3") || mimeType.contains("wav"))
+                {
+                    folderName = "audio";
+                }
+
+                else if(mimeType.contains("pdf") || mimeType.contains(".ppt") || mimeType.contains("xls") || mimeType.contains("zip") ||
+                        mimeType.contains("text") || mimeType.contains(".doc") || mimeType.contains("docx") )
+                {
+                    folderName = "others";
+                }
+
+
 
 
                 mStorageRef = cStorageRef.child("users").child(user.getUid()).child(folderName).child(fileName);
@@ -426,11 +566,7 @@ UploadArrayList.clear();
     }
 
 
-    public String getFileExtension(Uri uri) {
-        ContentResolver cR = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cR.getType(uri));
-    }
+
 
     public void MainFragementMethod(View v)
     {
@@ -467,6 +603,150 @@ UploadArrayList.clear();
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static String getPath(final Context context, final Uri uri) {
+
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+
+        // DocumentProvider
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            // ExternalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+
+                // TODO handle non-primary volumes
+            }
+            // DownloadsProvider
+            else if (isDownloadsDocument(uri)) {
+
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+                return getDataColumn(context, contentUri, null, null);
+            }
+            // MediaProvider
+            else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[] {
+                        split[1]
+                };
+
+                return getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+        }
+        // MediaStore (and general)
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            return getDataColumn(context, uri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        return null;
+    }
+
+
+    public static String getMimeType(String url)
+    {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            type = mime.getMimeTypeFromExtension(extension);
+        }
+        return type;
+    }
+
+
+
+    public static String getDataColumn(Context context, Uri uri, String selection,
+                                       String[] selectionArgs) {
+
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(column_index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+
+
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public void onBackPressed() {
 
@@ -480,4 +760,47 @@ UploadArrayList.clear();
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
