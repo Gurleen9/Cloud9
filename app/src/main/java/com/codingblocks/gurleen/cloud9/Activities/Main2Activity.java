@@ -325,8 +325,13 @@ UploadArrayList.clear();
 
         } else if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
                     boolean flag = false;
-          try{    ClipData clip = data.getClipData();  }
-          catch (Exception ex)
+          try{
+
+
+              ClipData clip = data.getClipData();
+
+          }
+          catch (NullPointerException ex)
           { flag = true;
                 Log.e("EXCEPTION","This exception came ");
 
