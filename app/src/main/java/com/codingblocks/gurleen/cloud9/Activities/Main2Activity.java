@@ -331,7 +331,7 @@ UploadArrayList.clear();
               ClipData clip = data.getClipData();
 
           }
-          catch (NullPointerException ex)
+          catch (NullPointerException ex1)
           { flag = true;
                 Log.e("EXCEPTION","This exception came ");
 
