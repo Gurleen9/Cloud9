@@ -15,7 +15,7 @@ import com.codingblocks.gurleen.cloud9.R;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private final int SPLASH_DISPLAY_LENGTH = 8000;
+    private final int SPLASH_DISPLAY_LENGTH = 5000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);

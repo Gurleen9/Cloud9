@@ -102,6 +102,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder1> {
                         mBottomSheetDialog.getWindow ().setGravity (Gravity.BOTTOM);
                         mBottomSheetDialog.show ();
 
+                        ImageButton SendButton;
+                        SendButton = (ImageButton)view.findViewById(R.id.sendButton);
+                        SendButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+
+
+                            }
+                        });
+
 
                     }
                 });

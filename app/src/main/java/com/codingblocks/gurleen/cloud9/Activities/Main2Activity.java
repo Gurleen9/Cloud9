@@ -5,9 +5,11 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -109,13 +111,15 @@ public class Main2Activity extends AppCompatActivity {
 
 
         chooserPhotos = (AddFloatingActionButton) findViewById(R.id.ChooseButton);
-        chooserPhotos.setImageResource(R.drawable.uploadicon);
-
+        chooserPhotos.setImageResource(R.drawable.ic_image_black_24dp);
+                   chooserPhotos.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF428DAB")));
 
         chooserCamera = (AddFloatingActionButton) findViewById(R.id.ChooseButton1);
-        chooserCamera.setImageResource(R.drawable.uploadicon);
+        chooserCamera.setImageResource(R.drawable.ic_camera_alt_black_24dp);
+        chooserCamera.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF428DAB")));
         chooserDisk = (AddFloatingActionButton) findViewById(R.id.ChooseButton2);
-        chooserDisk.setImageResource(R.drawable.uploadicon);
+        chooserDisk.setImageResource(R.drawable.ic_insert_drive_file_black_24dp);
+        chooserDisk.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF428DAB")));
         UploadArrayList = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
@@ -191,11 +195,12 @@ public class Main2Activity extends AppCompatActivity {
 
 
         }
-UploadArrayList.clear();
+
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                UploadArrayList.clear();
                 DataSnapshot  todoSnap = dataSnapshot.child("users").child(user.getUid()).child("image");
                 Iterable<DataSnapshot> snapshotIterable = todoSnap.getChildren();
 
@@ -406,9 +411,10 @@ UploadArrayList.clear();
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                             Upload upload = new Upload(fileName, taskSnapshot.getDownloadUrl().toString());
-                            UploadArrayList.add(upload);
+                            //UploadArrayList.add(upload);
 
                             DatabaseReference dbrefNew = databaseReference.child("users").child(user.getUid()).child(folderName);
+                            dbrefNew.removeValue();
                             dbrefNew.setValue(UploadArrayList);
 
                         }
@@ -521,9 +527,13 @@ UploadArrayList.clear();
                                 // MyAsyncTask2 asyncTask2 = new MyAsyncTask2(dbrefNew);
                                 // asyncTask2.execute(ImagesuriArrayList);
                                 Upload upload = new Upload(fileName, taskSnapshot.getDownloadUrl().toString());
+                                Log.e("TAG","BEFORE ADDING UPLOAD ARRAY LIST" + UploadArrayList.size() );
                                 UploadArrayList.add(upload);
 
+
                                 DatabaseReference dbrefNew = databaseReference.child("users").child(user.getUid()).child(folderName);
+                                dbrefNew.removeValue();
+
                                 dbrefNew.setValue(UploadArrayList);
 
                             }

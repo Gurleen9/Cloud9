@@ -4,30 +4,83 @@
       android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
    <ImageButton
        android:id="@+id/sendButton"
 
        android:background="@drawable/sendicon"
        android:layout_width="50dp"
        android:layout_height="50dp" />
+
+    <TextView
+        android:textSize="25dp"
+        android:layout_marginLeft="12dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:text="Send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <ImageButton
         android:id="@+id/deleteButton"
           android:layout_marginTop="2dp"
         android:background="@drawable/deleteicon"
         android:layout_width="50dp"
         android:layout_height="50dp" />
+        <TextView
+            android:textSize="25dp"
+            android:layout_marginLeft="12dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:text="Delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+<LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <ImageButton
         android:id="@+id/downloadButton"
         android:layout_marginTop="2dp"
         android:background="@drawable/downloadicon"
         android:layout_width="50dp"
         android:layout_height="50dp" />
+    <TextView
+        android:textSize="25dp"
+        android:layout_marginLeft="12dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:text="Download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <ImageButton
         android:id="@+id/shareButton"
         android:layout_marginTop="2dp"
         android:background="@drawable/shareicon"
         android:layout_width="50dp"
         android:layout_height="50dp" />
+        <TextView
+            android:textSize="25dp"
+            android:layout_marginLeft="12dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:text="Share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>

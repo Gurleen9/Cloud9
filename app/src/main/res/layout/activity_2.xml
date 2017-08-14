@@ -37,8 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
-            fab:fab_addButtonColorNormal="@color/accent"
-            fab:fab_addButtonColorPressed="@color/accent_dark"
+            fab:fab_addButtonColorNormal="@color/blue_semi_transparent"
+            fab:fab_addButtonColorPressed="#FF428DAB"
             fab:fab_addButtonPlusIconColor="@color/white"
             fab:fab_addButtonStrokeVisible="false"
             fab:fab_labelStyle="@style/menu_labels_style"
@@ -53,8 +53,8 @@
                 fab:fab_colorPressed="@color/accent_dark"
                 fab:fab_plusIconColor="@color/white"
 
-                fab:fab_icon="@drawable/gu1"
-                fab:fab_size="mini"
+                fab:fab_icon="@drawable/ic_image_black_24dp"
+                fab:fab_size="normal"
                 fab:fab_title="Gallery" />
 
             <com.getbase.floatingactionbutton.AddFloatingActionButton
@@ -65,7 +65,7 @@
                 fab:fab_colorPressed="@color/accent_dark"
                 fab:fab_plusIconColor="@color/white"
                 fab:fab_icon="@drawable/gu2"
-                fab:fab_size="mini"
+                fab:fab_size="normal"
                 fab:fab_title="Take Photo" />
 
             <com.getbase.floatingactionbutton.AddFloatingActionButton
@@ -77,7 +77,7 @@
                 fab:fab_plusIconColor="@color/white"
 
                 fab:fab_icon="@drawable/gu3"
-                fab:fab_size="mini"
+                fab:fab_size="normal"
                 fab:fab_title="Device Files" />
 
 
